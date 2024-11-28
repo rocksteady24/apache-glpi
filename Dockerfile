@@ -10,10 +10,7 @@ RUN apt-get update && apt-get install -y \
     libldap2-dev \
     libbz2-dev \
     libzip-dev \
-    && docker-php-source extract \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd mysqli intl exif ldap bz2 zip opcache \
-    && docker-php-source delete \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

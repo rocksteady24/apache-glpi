@@ -12,7 +12,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - published: 80
+      - published: 8080
         target: 80
     networks:
       glpi-network:
