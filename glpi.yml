@@ -1,0 +1,41 @@
+services:
+  nginx:
+    image: ali-glpi
+    container_name: apache
+    restart: always
+    volumes:
+      - ./storage/glpi-files:/var/www/html
+      - ./storage/plugins:/var/www/html/plugins
+    depends_on:
+      - mysql
+    ports:
+      - published: 80
+        target: 80
+    networks:
+      glpi-network:
+        ipv4_address: 172.20.0.2
+
+  mysql:
+    image: mysql:9.1.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./storage/mysql-data:/var/lib/mysql
+    networks:
+      glpi-network:
+        ipv4_address: 172.20.0.3
+
+networks:
+  glpi-network:
+    name: gnet
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      config:
+        - subnet: 172.20.0.0/29
