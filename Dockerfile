@@ -9,10 +9,10 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libldap2-dev \
     libbz2-dev \
-    libzip-dev \
-    && docker-php-ext-install gd mysqli intl exif ldap bz2 zip opcache \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    libzip-dev && \
+    docker-php-ext-install gd mysqli intl exif ldap bz2 zip opcache && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
@@ -28,7 +28,7 @@ RUN chown -R www-data:www-data /var/www/html
 
 # Configure Apache to use /var/www/html/public as the document root
 RUN echo \
-' \
+" \
 <VirtualHost *:80>\n\
     ServerName glpi.localhost\n\
     DocumentRoot /var/www/html/public\n\
@@ -41,7 +41,7 @@ RUN echo \
         RewriteRule ^(.*)$ index.php [QSA,L]\n\
     </Directory>\n\
 </VirtualHost>\n\
-' > /etc/apache2/sites-available/000-default.conf
+" > /etc/apache2/sites-available/000-default.conf
 
 # Set PHP session cookie security
 RUN echo "session.cookie_httponly = 1" >> /usr/local/etc/php/conf.d/security.ini
