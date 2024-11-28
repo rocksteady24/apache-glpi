@@ -1,7 +1,10 @@
 services:
-  nginx:
+  glpi:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: ali-glpi
-    container_name: apache
+    container_name: glpi
     restart: always
     volumes:
       - ./storage/glpi-files:/var/www/html
