@@ -48,6 +48,7 @@ RUN echo \
 
 # Set PHP session cookie security
 RUN echo "session.cookie_httponly = 1" >> /usr/local/etc/php/conf.d/security.ini
+RUN sed -i 's/^max_input_vars = .*/max_input_vars = 5000/' /etc/php/8.3/apache2/php.ini
 
 # Expose port 80
 EXPOSE 80
