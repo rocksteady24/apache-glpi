@@ -40,10 +40,12 @@ echo "\
 Description=GLPI Docker Compose Service
 After=docker.service
 Requires=docker.service
+Conflicts=shutdown.target reboot.target halt.target
 
 [Service]
 WorkingDirectory=${CURRENT_LOCATION}
 Restart=always
+RestartSec=10
 ExecStart=/usr/bin/docker compose -f glpi.yml up --build
 ExecStop=/usr/bin/docker compose -f glpi.yml down
 
