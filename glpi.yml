@@ -3,8 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: ali-glpi
-    container_name: glpi
+    image: custom-glpi
+    container_name: glpi-apache
     restart: always
     volumes:
       - ./storage/glpi-files:/var/www/html
@@ -20,7 +20,7 @@ services:
 
   mysql:
     image: mysql:9.1.0
-    container_name: mysql
+    container_name: glpi-mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
